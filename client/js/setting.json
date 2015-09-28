@@ -1,19 +1,16 @@
  {
  	"env":"dev",
  	"dev": {
- 		"host":"127.0.0.1",
- 		"port":"3000",
- 		"protocol":"http"
+ 		"host":"localhost",
+ 		"post":"3000"
  	},
  	"prod": {
- 		"host":"127.0.0.1",
- 		"port":"3000",
- 		"protocol":"http"
+ 		"host":"localhost",
+ 		"post":"3000"
  	},
  	"test": {
- 		"host":"127.0.0.1",
- 		"port":"3000",
- 		"protocol":"http"
+ 		"host":"localhost",
+ 		"post":"3000"
  	},
  	"app":{
  		"version":"0.0.1",

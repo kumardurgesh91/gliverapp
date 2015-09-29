@@ -1,28 +1,37 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var usersSchema = new Schema({
-	fname:  {
+	fname: {
 		type:String,
 		require:true,
 		trim:true
 	},
-	lname:  {
+	lname: {
 		type:String,
 		require:true,
 		trim:true
 	},
-	email:  {
+	email: {
 		type:String,
 		require:true,
 		trim:true
 	},
-	password:  {
+	password: {
 		type:String,
 		require:true,
 		trim:true
+	},
+	createdAT: {
+		type:Date,
+		default:new Date()
+	},
+	userType: {
+		type:String,
+		default:"user"
 	}
 });
 
+//STATICS METHODS
 // saveing user
 usersSchema.statics.saveUser = function (userObj, cb) {
 	if(!userObj.email || userObj.email === undefined || typeof userObj.email === undefined)
@@ -33,26 +42,33 @@ usersSchema.statics.saveUser = function (userObj, cb) {
   		return cb("Invalid first name", null);
   	if(!userObj.password || userObj.password === undefined || typeof userObj.password === undefined)
   		return cb("Invalid first name", null);
+  	var model = this;
   	this.findOneByProp({email:userObj.email}, function (err, user) {
   		// body...
-  		console.log(err, user);
   		if(err)
   			return cb(err, null);
   		else if(user)
   			return cb("email id already exist", null);
   		else 
-  			return this.create(userObj, cb);
+  			return model.create(userObj, cb);
   	});
 }
 
 usersSchema.statics.findOneByProp = function (query, cb) {
-	// body...
-
 	if(typeof query === 'object') {
 		return this.findOne(query, cb);
 	} else {
 		cb("Invalid search query", null);
 	}
+}
+
+
+//METHODS
+
+usersSchema.methods.toJSON = function() {
+  var obj = this.toObject()
+  delete obj.password
+  return obj
 }
 
 var Users = mongoose.model('Users', usersSchema);

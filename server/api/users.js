@@ -38,4 +38,25 @@ router.post('/create', function (req, res, next) {
 	});
 });
 
+/**
+ * login user
+ * @paran: Object
+ * @reurn: Object
+ */
+
+router.post('/login', function (req, res, next) {
+	if(!req.body.email) return res.send(200, {success:false, err:"email id missing"});
+	else if(!req.body.password) return res.send(200, {success:false, err:"password missing"});
+	else Users.findOneByProp({email:req.body.email}, function (err, user) {
+			if(err) {
+				res.send(200, {success:false, err:err});
+			} else if(user) {
+				if(user.password === req.body.password) return res.send(200, {success:true, user:user});
+				else res.send(200, {success:false, err:"invalid email or password"});
+			} else {
+				res.send(200, {success:false, err: "Please try again"});
+			}
+		});
+});
+
 module.exports = router;

@@ -5,5 +5,10 @@
 		"dbhost":"127.0.0.1",
 		"dbuser":"",
 		"dbpassword":""
+	},
+	"onlyEmailVerifiedUsers":false,
+	"mailerAuth":{
+		"username":"",
+		"passwoerd":""
 	}
 }
